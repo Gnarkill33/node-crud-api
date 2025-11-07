@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "start:dev": "ts-node-esm src/server.ts"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.1",
