@@ -1,6 +1,8 @@
-import dotenv from 'dotenv';
+export interface User {
+  id: string;
+  username: string;
+  age: number;
+  hobbies: string[];
+}
 
-dotenv.config();
-
-export const PORT = Number(process.env.PORT) || 3000;
-export const HOSTNAME = process.env.HOSTNAME ?? '0.0.0.0';
+export type StatusCode = 200 | 201 | 400 | 404 | 500;

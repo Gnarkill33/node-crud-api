@@ -1,9 +1,21 @@
 import { createServer } from 'node:http';
-import { PORT } from './types.ts';
+import { URL } from 'node:url';
+import { PORT } from './constants.ts';
+import { handleGetRequest } from './handlers.ts';
 
 const server = createServer((req, res) => {
-  res.writeHead(200, { 'Content-Type': 'text/plain' });
-  res.end('Hello World!\n');
+  if (!req.url) {
+    res.writeHead(400, { 'Content-Type': 'text/plain' });
+    res.end('Bad Request\n');
+    return;
+  }
+
+  const myUrl = new URL(req.url, `http://${req.headers.host}`);
+  const parsedUrl = myUrl.pathname;
+
+  if (req.method === 'GET') {
+    handleGetRequest(res, parsedUrl);
+  }
 });
 
 server.listen(PORT, () => {
