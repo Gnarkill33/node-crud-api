@@ -8,6 +8,12 @@ export class Store {
     return [...this.users];
   }
 
+  getSpecificUser(id: string): User | null {
+    const user = this.users.find((user) => user.id === id);
+    if (!user) return null;
+    return { ...user };
+  }
+
   createNewUser(userData: Omit<User, 'id'>) {
     const newUser: User = { id: randomUUID(), ...userData };
     this.users.push(newUser);
