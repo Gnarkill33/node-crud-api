@@ -21,6 +21,8 @@ export const handleGetRequest = (res: ServerResponse, parsedUrl: string) => {
     } else {
       sendResponse(res, 400, { message: 'userId is invalid' });
     }
+  } else {
+    sendResponse(res, 404, { message: 'Endpoint not found' });
   }
 };
 
@@ -50,6 +52,8 @@ export const handlePostRequest = (req: IncomingMessage, res: ServerResponse, par
         sendResponse(res, 400, { message: 'Invalid JSON format' });
       }
     });
+  } else {
+    sendResponse(res, 404, { message: 'Endpoint not found' });
   }
 };
 
@@ -93,6 +97,8 @@ export const handlePutRequest = (req: IncomingMessage, res: ServerResponse, pars
         sendResponse(res, 400, { message: 'Invalid JSON format' });
       }
     });
+  } else {
+    sendResponse(res, 404, { message: 'Endpoint not found' });
   }
 };
 
@@ -110,5 +116,7 @@ export const handleDeleteRequest = (res: ServerResponse, parsedUrl: string) => {
     } else {
       sendResponse(res, 400, { message: 'userId is invalid' });
     }
+  } else {
+    sendResponse(res, 404, { message: 'Endpoint not found' });
   }
 };
