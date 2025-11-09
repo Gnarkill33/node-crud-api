@@ -52,6 +52,10 @@ export const handlePostRequest = (req: IncomingMessage, res: ServerResponse, par
         sendResponse(res, 400, { message: 'Invalid JSON format' });
       }
     });
+
+    req.on('error', () => {
+      sendResponse(res, 500, { message: 'Internal server error' });
+    });
   } else {
     sendResponse(res, 404, { message: 'Endpoint not found' });
   }
@@ -96,6 +100,10 @@ export const handlePutRequest = (req: IncomingMessage, res: ServerResponse, pars
       } catch (error) {
         sendResponse(res, 400, { message: 'Invalid JSON format' });
       }
+    });
+
+    req.on('error', () => {
+      sendResponse(res, 500, { message: 'Internal server error' });
     });
   } else {
     sendResponse(res, 404, { message: 'Endpoint not found' });
