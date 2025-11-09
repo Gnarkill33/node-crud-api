@@ -5,4 +5,4 @@ export interface User {
   hobbies: string[];
 }
 
-export type StatusCode = 200 | 201 | 400 | 404 | 500;
+export type StatusCode = 200 | 201 | 204 | 400 | 404 | 500;

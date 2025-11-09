@@ -1,7 +1,7 @@
 import { createServer } from 'node:http';
 import { URL } from 'node:url';
 import { PORT } from './constants.ts';
-import { handleGetRequest, handlePostRequest, handlePutRequest } from './handlers.ts';
+import { handleDeleteRequest, handleGetRequest, handlePostRequest, handlePutRequest } from './handlers.ts';
 
 const server = createServer((req, res) => {
   if (!req.url) {
@@ -19,6 +19,8 @@ const server = createServer((req, res) => {
     handlePostRequest(req, res, parsedUrl);
   } else if (req.method === 'PUT') {
     handlePutRequest(req, res, parsedUrl);
+  } else if (req.method === 'DELETE') {
+    handleDeleteRequest(res, parsedUrl);
   }
 });
 

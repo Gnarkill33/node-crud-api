@@ -32,4 +32,10 @@ export class Store {
 
     return { ...updatedUser };
   }
+
+  deleteUser(id: string): boolean {
+    const userIndex = this.users.findIndex((user) => user.id === id);
+    this.users.splice(userIndex, 1);
+    return true;
+  }
 }

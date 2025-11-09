@@ -95,3 +95,20 @@ export const handlePutRequest = (req: IncomingMessage, res: ServerResponse, pars
     });
   }
 };
+
+export const handleDeleteRequest = (res: ServerResponse, parsedUrl: string) => {
+  if (parsedUrl.match(/^\/users\/[^\/]+$/)) {
+    const userId = parsedUrl.split('/')[2];
+
+    if (uuidValidate(userId)) {
+      const isDeleted = store.deleteUser(userId);
+      if (isDeleted) {
+        sendResponse(res, 204, null);
+      } else {
+        sendResponse(res, 404, { message: 'User not found' });
+      }
+    } else {
+      sendResponse(res, 400, { message: 'userId is invalid' });
+    }
+  }
+};
