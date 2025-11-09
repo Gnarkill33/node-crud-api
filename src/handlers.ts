@@ -52,3 +52,46 @@ export const handlePostRequest = (req: IncomingMessage, res: ServerResponse, par
     });
   }
 };
+
+export const handlePutRequest = (req: IncomingMessage, res: ServerResponse, parsedUrl: string) => {
+  if (parsedUrl.match(/^\/users\/[^\/]+$/)) {
+    const userId = parsedUrl.split('/')[2];
+
+    if (!uuidValidate(userId)) {
+      sendResponse(res, 400, { message: 'userId is invalid' });
+      return;
+    }
+
+    const existingUser = store.getUserById(userId);
+    if (!existingUser) {
+      sendResponse(res, 404, { message: 'User not found' });
+      return;
+    }
+
+    let body = '';
+
+    req.on('data', (chunk) => {
+      body += chunk.toString();
+    });
+
+    req.on('end', () => {
+      try {
+        const userData = JSON.parse(body);
+
+        const requiredFields = ['username', 'age', 'hobbies'];
+        const missingFields = requiredFields.filter((field) => !userData[field]);
+
+        if (missingFields.length > 0) {
+          sendResponse(res, 400, { message: 'Missing required fields' });
+          return;
+        }
+
+        const updatedUser = store.updateUser(userId, userData);
+
+        sendResponse(res, 200, updatedUser);
+      } catch (error) {
+        sendResponse(res, 400, { message: 'Invalid JSON format' });
+      }
+    });
+  }
+};

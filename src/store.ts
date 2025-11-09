@@ -14,9 +14,22 @@ export class Store {
     return { ...user };
   }
 
-  createNewUser(userData: Omit<User, 'id'>) {
+  createNewUser(userData: Omit<User, 'id'>): User {
     const newUser: User = { id: randomUUID(), ...userData };
     this.users.push(newUser);
     return newUser;
+  }
+
+  updateUser(id: string, updatedInfo: Omit<User, 'id'>): User {
+    const userIndex = this.users.findIndex((user) => user.id === id);
+
+    const updatedUser: User = {
+      id,
+      ...updatedInfo,
+    };
+
+    this.users[userIndex] = updatedUser;
+
+    return { ...updatedUser };
   }
 }
