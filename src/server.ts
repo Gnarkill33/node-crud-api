@@ -1,7 +1,7 @@
 import { createServer } from 'node:http';
 import { URL } from 'node:url';
 import { PORT } from './constants.ts';
-import { handleGetRequest } from './handlers.ts';
+import { handleGetRequest, handlePostRequest } from './handlers.ts';
 
 const server = createServer((req, res) => {
   if (!req.url) {
@@ -15,6 +15,8 @@ const server = createServer((req, res) => {
 
   if (req.method === 'GET') {
     handleGetRequest(res, parsedUrl);
+  } else if (req.method === 'POST') {
+    handlePostRequest(req, res, parsedUrl);
   }
 });
 

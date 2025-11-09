@@ -4,11 +4,11 @@ import { randomUUID } from 'node:crypto';
 export class Store {
   private users: User[] = [];
 
-  getAllUSers() {
+  getAllUsers() {
     return [...this.users];
   }
 
-  getSpecificUser(id: string): User | null {
+  getUserById(id: string): User | null {
     const user = this.users.find((user) => user.id === id);
     if (!user) return null;
     return { ...user };
